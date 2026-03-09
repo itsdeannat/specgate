@@ -95,6 +95,10 @@ status code, allowing it to be used as a quality gate in CI.`,
 			display.PrintResults(result, strict)
 		}
 
+		if result.HasErrors() || (strict && result.HasWarnings()) {
+			os.Exit(1)
+		}
+
 	},
 }
 
