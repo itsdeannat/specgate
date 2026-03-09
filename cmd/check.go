@@ -73,7 +73,7 @@ status code, allowing it to be used as a quality gate in CI.`,
 			validate.CheckServer(server, result)
 		}
 
-		if strict {
+		if strict && outputFormat == "" {
 			fmt.Println("STRICT MODE ENABLED")
 			fmt.Println()
 		}
