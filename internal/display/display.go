@@ -3,7 +3,8 @@ package display
 import (
 	"fmt"
 	"os"
-	"github.com/itsdeannat/specgate/internal/validate"
+
+	"github.com/itsdeannat/specgate-cli/internal/validate"
 )
 
 func PrintResults(result *validate.CheckResult, strict bool) {
@@ -19,7 +20,7 @@ func PrintResults(result *validate.CheckResult, strict bool) {
 		fmt.Println()
 	}
 
-		if !strict && result.HasWarnings() {
+	if !strict && result.HasWarnings() {
 		fmt.Println("WARNINGS")
 		fmt.Println("--------")
 		fmt.Println()

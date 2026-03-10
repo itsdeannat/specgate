@@ -1,22 +1,22 @@
 package report
 
 import (
-	"github.com/itsdeannat/specgate/internal/validate"
+	"github.com/itsdeannat/specgate-cli/internal/validate"
 )
 
 type JsonFormat struct {
-    Ready bool `json:"ready"`
-	Strict bool `json:"strict"`
-	Errors map[string][]string `json:"errors,omitempty"`
+	Ready    bool                `json:"ready"`
+	Strict   bool                `json:"strict"`
+	Errors   map[string][]string `json:"errors,omitempty"`
 	Warnings map[string][]string `json:"warnings,omitempty"`
 }
 
 func ToJsonFormat(result *validate.CheckResult, strict bool) *JsonFormat {
 	jsonResult := &JsonFormat{
-		
-		Ready: !result.HasErrors() && !result.HasWarnings(),
-		Strict: strict,
-		Errors: make(map[string][]string),
+
+		Ready:    !result.HasErrors() && !result.HasWarnings(),
+		Strict:   strict,
+		Errors:   make(map[string][]string),
 		Warnings: make(map[string][]string),
 	}
 
@@ -37,7 +37,7 @@ func ToJsonFormat(result *validate.CheckResult, strict bool) *JsonFormat {
 	}
 	if result.MissingServers {
 		jsonResult.Errors["missing_servers"] = []string{"No servers defined - add a server URL to your spec"}
-	} 
+	}
 	if len(result.ServerPlaceholderViolations) > 0 {
 		jsonResult.Errors["server_placeholders"] = result.ServerPlaceholderViolations
 	}

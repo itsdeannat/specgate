@@ -1,18 +1,18 @@
 /*
 Copyright © 2026 NAME HERE <EMAIL ADDRESS>
-
 */
 package cmd
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
-	"encoding/json"
-	"github.com/spf13/cobra"
-	"github.com/itsdeannat/specgate/internal/validate"
-	"github.com/itsdeannat/specgate/internal/report"
-	"github.com/itsdeannat/specgate/internal/llm"
+
 	"github.com/getkin/kin-openapi/openapi3"
+	"github.com/itsdeannat/specgate-cli/internal/llm"
+	"github.com/itsdeannat/specgate-cli/internal/report"
+	"github.com/itsdeannat/specgate-cli/internal/validate"
+	"github.com/spf13/cobra"
 )
 
 // adviseCmd represents the advise command

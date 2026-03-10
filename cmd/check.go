@@ -4,13 +4,14 @@ Copyright © 2026 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
-	"encoding/json"
-	"github.com/itsdeannat/specgate/internal/validate"
-	"github.com/itsdeannat/specgate/internal/display"
-	"github.com/itsdeannat/specgate/internal/report"
+
 	"github.com/getkin/kin-openapi/openapi3"
+	"github.com/itsdeannat/specgate-cli/internal/display"
+	"github.com/itsdeannat/specgate-cli/internal/report"
+	"github.com/itsdeannat/specgate-cli/internal/validate"
 	"github.com/spf13/cobra"
 )
 
@@ -30,7 +31,7 @@ status code, allowing it to be used as a quality gate in CI.`,
 		file := args[0]
 
 		loader := openapi3.NewLoader()
-		doc, err := loader.LoadFromFile(file) 
+		doc, err := loader.LoadFromFile(file)
 
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "specgate: failed to load spec %q: %v\n", file, err)
