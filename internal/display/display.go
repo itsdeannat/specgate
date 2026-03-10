@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/itsdeannat/specgate-cli/internal/validate"
+	"specgate/internal/validate"
 )
 
 func PrintResults(result *validate.CheckResult, strict bool) {

@@ -8,10 +8,11 @@ import (
 	"fmt"
 	"os"
 
+	"specgate/internal/display"
+	"specgate/internal/report"
+	"specgate/internal/validate"
+
 	"github.com/getkin/kin-openapi/openapi3"
-	"github.com/itsdeannat/specgate-cli/internal/display"
-	"github.com/itsdeannat/specgate-cli/internal/report"
-	"github.com/itsdeannat/specgate-cli/internal/validate"
 	"github.com/spf13/cobra"
 )
 

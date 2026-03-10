@@ -1,7 +1,7 @@
 package report
 
 import (
-	"github.com/itsdeannat/specgate-cli/internal/validate"
+	"specgate/internal/validate"
 )
 
 type JsonFormat struct {
