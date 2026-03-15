@@ -1,0 +1,14 @@
+{
+  "name": "specgate",
+  "version": "0.1.0",
+  "description": "A command-line tool for enforcing specification readiness",
+  "main": "index.js",
+  "scripts": {
+    "release": "standard-version"
+  },
+  "author": "Deanna Thompson",
+  "license": "MIT",
+  "dependencies": {
+    "standard-version": "^9.5.0"
+  }
+}
