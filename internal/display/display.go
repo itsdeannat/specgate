@@ -116,6 +116,22 @@ func printWarnings(result *validate.CheckResult) {
 		}
 		fmt.Println()
 	}
+	if len(result.OperationTagViolations) > 0 {
+		fmt.Printf("Missing operation tags for %d operation(s):\n", len(result.OperationTagViolations))
+		fmt.Println()
+		for _, item := range result.OperationTagViolations {
+			fmt.Println("-", item)
+		}
+		fmt.Println()
+	}
+	if len(result.OperationIdViolations) > 0 {
+		fmt.Printf("Missing operation ids for %d operation(s):\n", len(result.OperationIdViolations))
+		fmt.Println()
+		for _, item := range result.OperationIdViolations {
+			fmt.Println("-", item)
+		}
+		fmt.Println()
+	}
 }
 
 func hasWarnings(result *validate.CheckResult) bool {

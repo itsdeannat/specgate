@@ -14,6 +14,8 @@ type CheckResult struct {
 	ErrorResponseViolations              []string
 	ErrorResponseDescriptionViolations   []string
 	ServerPlaceholderViolations          []string
+	OperationIdViolations				 []string
+	OperationTagViolations				 []string
 	MissingServers                       bool
 }
 
@@ -42,6 +44,12 @@ func CheckOperation(op *openapi3.Operation, path string, result *CheckResult) {
 
 	if strings.TrimSpace(op.Summary) == "" {
 		result.OperationSummaryViolations = append(result.OperationSummaryViolations, path)
+	}
+	if strings.TrimSpace(op.OperationID) == "" {
+		result.OperationIdViolations = append(result.OperationIdViolations, path)
+	}
+	if len(op.Tags) == 0 {
+		result.OperationTagViolations = append(result.OperationTagViolations, path)
 	}
 	if strings.TrimSpace(op.Description) == "" {
 		result.OperationDescriptionViolations = append(result.OperationDescriptionViolations, path)
