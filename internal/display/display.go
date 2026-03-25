@@ -102,6 +102,15 @@ func printErrors(result *validate.CheckResult, strict bool) {
 		fmt.Println()
 	}
 
+	if len(result.ParamDescriptionViolations) > 0 {
+		fmt.Printf("Missing descriptions for %d parameter(s):\n", len(result.ParamDescriptionViolations))
+		fmt.Println()
+		for _, item := range result.ParamDescriptionViolations {
+			fmt.Println("-", item)
+		}
+		fmt.Println()
+	}
+
 	if strict && hasWarnings(result) {
 		printWarnings(result)
 	}
@@ -112,6 +121,22 @@ func printWarnings(result *validate.CheckResult) {
 		fmt.Printf("Missing operation descriptions for %d operation(s):\n", len(result.OperationDescriptionViolations))
 		fmt.Println()
 		for _, item := range result.OperationDescriptionViolations {
+			fmt.Println("-", item)
+		}
+		fmt.Println()
+	}
+	if len(result.OperationTagViolations) > 0 {
+		fmt.Printf("Missing operation tags for %d operation(s):\n", len(result.OperationTagViolations))
+		fmt.Println()
+		for _, item := range result.OperationTagViolations {
+			fmt.Println("-", item)
+		}
+		fmt.Println()
+	}
+	if len(result.OperationIdViolations) > 0 {
+		fmt.Printf("Missing operation ids for %d operation(s):\n", len(result.OperationIdViolations))
+		fmt.Println()
+		for _, item := range result.OperationIdViolations {
 			fmt.Println("-", item)
 		}
 		fmt.Println()
