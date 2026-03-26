@@ -48,11 +48,11 @@ status code, allowing it to be used as a quality gate in CI.`,
 		_, configErr := os.Stat("./.specgate.yaml") // check if config exists
 
 		if configErr == nil {
-			fmt.Println("SpecGate config exists. Loading config.")
+			fmt.Println("Loaded config from .specgate.yaml")
 		} else {
-			fmt.Println("No SpecGate config exists. Creating new config.")
+			fmt.Println("No SpecGate config found in project root. Created .specgate.yaml")
 			config.CreateConfig()
-			fmt.Println("Review the config before running check again.")
+			fmt.Println("Edit the config, then rerun:\n specgate check")
 			os.Exit(3)
 		}
 
