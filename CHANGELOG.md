@@ -17,7 +17,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 * improve messaging for specgate config ([bea5314](https://github.com/itsdeannat/specgate-cli/commit/bea531470b0ca2a4a07a9ea43244322c7039283d))
 
-## 0.2.0 (2026-03-28)
+## 0.2.0 (2026-03-25)
 
 
 ### Added
