@@ -7,13 +7,14 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
-
+	"specgate/internal/config"
 	"specgate/internal/display"
 	"specgate/internal/report"
 	"specgate/internal/validate"
 
 	"github.com/getkin/kin-openapi/openapi3"
 	"github.com/spf13/cobra"
+	"gopkg.in/yaml.v3"
 )
 
 var strict bool
@@ -44,6 +45,21 @@ status code, allowing it to be used as a quality gate in CI.`,
 			os.Exit(2)
 		}
 
+		_, configErr := os.Stat("./.specgate.yaml") // check if config exists
+
+		if configErr == nil {
+			fmt.Println("Loaded config from .specgate.yaml")
+		} else {
+			fmt.Println("No SpecGate config found in project root. Created .specgate.yaml")
+			config.CreateConfig()
+			fmt.Println("Edit the config, then rerun:\n specgate check")
+			os.Exit(3)
+		}
+
+		configFile, err := os.ReadFile("./.specgate.yaml")
+		var config config.RulesConfig
+		err = yaml.Unmarshal(configFile, &config)
+
 		result := &validate.CheckResult{}
 
 		for path, pathItem := range doc.Paths.Map() {
@@ -72,7 +88,7 @@ status code, allowing it to be used as a quality gate in CI.`,
 		}
 
 		for _, server := range doc.Servers {
-			validate.CheckServer(server, result)
+			validate.CheckServer(server, result, config.Rules.ServerBlockList)
 		}
 
 		if strict && outputFormat == "" {
