@@ -64,13 +64,13 @@ func printErrors(result *validate.CheckResult, strict bool) {
 
 	if len(result.SuccessResponseDescriptionViolations) > 0 {
 		for _, item := range result.SuccessResponseDescriptionViolations {
-			fmt.Fprintf(W, "%sMissing descriptions for success responses (2xx)\t%s\n", error, item)
+			fmt.Fprintf(W, "%sMissing success response descriptions\t%s\n", error, item)
 		}
 	}
 
 	if len(result.ErrorResponseDescriptionViolations) > 0 {
 		for _, item := range result.ErrorResponseDescriptionViolations {
-			fmt.Fprintf(W, "%sMissing descriptions for error responses (4xx/5xx/default)\t%s\n", error, item)
+			fmt.Fprintf(W, "%sMissing error response descriptions\t%s\n", error, item)
 		}
 	}
 
