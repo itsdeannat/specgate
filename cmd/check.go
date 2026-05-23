@@ -20,6 +20,7 @@ import (
 
 var strict bool
 var outputFormat string
+var verbose bool
 
 // checkCmd represents the check command
 var checkCmd = &cobra.Command{
@@ -42,6 +43,7 @@ status code, allowing it to be used as a quality gate in CI.`,
 		}
 
 		if err := doc.Validate(loader.Context); err != nil {
+			
 			issuesFile, _ := os.Create(".specgate.log")
 			if issuesFile != nil {
 				fmt.Fprintf(issuesFile, "OpenAPI Structural Issues\n")
@@ -49,8 +51,11 @@ status code, allowing it to be used as a quality gate in CI.`,
 				fmt.Fprintf(issuesFile, "%v\n", err)
 				issuesFile.Close()
 			}
-			fmt.Fprintf(os.Stderr, "specgate: warning - OpenAPI structural issues detected.\n")
-			fmt.Fprintf(os.Stderr, "See .specgate.log for details.\n\n")
+			
+			if outputFormat != "json" && !verbose {
+				fmt.Fprintf(os.Stderr, "specgate: warning - OpenAPI structural issues detected.\n")
+				fmt.Fprintf(os.Stderr, "Structural issues written to .specgate.log.\n\n")
+			}
 		}
 
 		_, configErr := os.Stat("./.specgate.yaml") // check if config exists
@@ -118,9 +123,13 @@ status code, allowing it to be used as a quality gate in CI.`,
 				os.Exit(2)
 			}
 			fmt.Println(string(jsonBytes))
-		} else {
+		}
+
+		if verbose {
 			display.PrintResults(file, result, strict)
 		}
+
+		display.PrintSummary(file, result, strict)
 
 		if result.HasErrors() || (strict && result.HasWarnings()) {
 			os.Exit(1)
@@ -133,6 +142,7 @@ func init() {
 	rootCmd.AddCommand(checkCmd)
 	checkCmd.Flags().BoolVar(&strict, "strict", false, "Treat warnings as errors")
 	checkCmd.Flags().StringVar(&outputFormat, "format", "", "Output results as json")
+	checkCmd.Flags().BoolVar(&verbose, "verbose", false, "Display details of specgate run")
 
 	// Here you will define your flags and configuration settings.
 
