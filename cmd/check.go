@@ -42,8 +42,7 @@ status code, allowing it to be used as a quality gate in CI.`,
 		}
 
 		if err := doc.Validate(loader.Context); err != nil {
-			fmt.Fprintf(os.Stderr, "specgate: spec validation failed: %v\n", err)
-			os.Exit(2)
+			fmt.Fprintf(os.Stderr, "specgate: warning - OpenAPI structural issues detected:\n%v\n\n", err)
 		}
 
 		_, configErr := os.Stat("./.specgate.yaml") // check if config exists
