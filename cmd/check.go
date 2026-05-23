@@ -42,13 +42,21 @@ status code, allowing it to be used as a quality gate in CI.`,
 		}
 
 		if err := doc.Validate(loader.Context); err != nil {
-			fmt.Fprintf(os.Stderr, "specgate: warning - OpenAPI structural issues detected:\n%v\n\n", err)
+			issuesFile, _ := os.Create(".specgate.log")
+			if issuesFile != nil {
+				fmt.Fprintf(issuesFile, "OpenAPI Structural Issues\n")
+				fmt.Fprintf(issuesFile, "=========================\n\n")
+				fmt.Fprintf(issuesFile, "%v\n", err)
+				issuesFile.Close()
+			}
+			fmt.Fprintf(os.Stderr, "specgate: warning - OpenAPI structural issues detected.\n")
+			fmt.Fprintf(os.Stderr, "See .specgate.log for details.\n\n")
 		}
 
 		_, configErr := os.Stat("./.specgate.yaml") // check if config exists
 
 		if configErr == nil {
-			fmt.Println("Loaded config from .specgate.yaml")
+			fmt.Println("Loaded config from .specgate.yaml.")
 			fmt.Println()
 		} else {
 			fmt.Println("No SpecGate config found in project root. Created .specgate.yaml")
