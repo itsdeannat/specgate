@@ -143,13 +143,13 @@ func PrintSummary(file string, result *validate.CheckResult, strict bool) {
 		fmt.Printf("%s - %d %s\n", file, totalCount, errorLabel)
 		fmt.Println()
 	} else {
-		errorLabel := "errors"
+		errorLabel := color.RedString("errors")
 		if ErrorCount == 1 {
-			errorLabel = "error"
+			errorLabel = color.RedString("error")
 		}
-		warningLabel := "warnings"
+		warningLabel := color.YellowString("warnings")
 		if WarningCount == 1 {
-			warningLabel = "warning"
+			warningLabel = color.YellowString("warning")
 		}
 		fmt.Printf("%s - %d %s, %d %s\n", file, ErrorCount, errorLabel, WarningCount, warningLabel)
 		fmt.Println()
