@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/itsdeannat/specgate/compare/v1.0.0...v1.1.0) (2026-05-24)
+
+
+### Fixed
+
+* improve report messaging ([f50aba7](https://github.com/itsdeannat/specgate/commit/f50aba7c796b52525d72127e9bb6167486a81504))
+
+
+### Changed
+
+* add color to summary ([4bbab78](https://github.com/itsdeannat/specgate/commit/4bbab78298b45c3fd79c4c14891e2abd8dcb4ccb))
+* soften validation logic ([b23e3f0](https://github.com/itsdeannat/specgate/commit/b23e3f07f486096c3ace0b14b71c512c5e0ee999))
+
+
+### Added
+
+* add a verbose flag ([72c90aa](https://github.com/itsdeannat/specgate/commit/72c90aa0534317cf6afad97520aea7e03034ae64))
+* add ability to pipe structural issues to logfile ([b1be4ed](https://github.com/itsdeannat/specgate/commit/b1be4edc9ab0f711b0c9985be5a25ddeda43d602))
+* add lipgloss for warning box styling ([983beed](https://github.com/itsdeannat/specgate/commit/983beedd16e8c33df215cf7e1fd289c04b48b4a8))
+
 ## [1.0.0](https://github.com/itsdeannat/specgate/compare/v0.4.2...v1.0.0) (2026-04-05)
 
 * Initial stable release of SpecGate
