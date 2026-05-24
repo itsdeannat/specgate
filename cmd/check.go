@@ -12,7 +12,7 @@ import (
 	"github.com/itsdeannat/specgate/internal/report"
 	"github.com/itsdeannat/specgate/internal/settings"
 	"github.com/itsdeannat/specgate/internal/validate"
-
+	"charm.land/lipgloss/v2"
 	"github.com/getkin/kin-openapi/openapi3"
 	"github.com/spf13/cobra"
 	"gopkg.in/yaml.v3"
@@ -51,17 +51,22 @@ status code, allowing it to be used as a quality gate in CI.`,
 				fmt.Fprintf(issuesFile, "%v\n", err)
 				issuesFile.Close()
 			}
+
+			style := lipgloss.NewStyle().
+				Border(lipgloss.NormalBorder()).
+				BorderForeground(lipgloss.Color("226")).  
+				Padding(0, 1).
+				Margin(0, 0, 1, 0)
 			
 			if outputFormat != "json" && !verbose {
-				fmt.Fprintf(os.Stderr, "specgate: warning - OpenAPI structural issues detected.\n")
-				fmt.Fprintf(os.Stderr, "Structural issues written to .specgate.log.\n\n")
+				fmt.Println(style.Render("Warning: OpenAPI structural issues detected.\nSee .specgate.log for details."))
 			}
 		}
 
 		_, configErr := os.Stat("./.specgate.yaml") // check if config exists
 
 		if configErr == nil {
-			fmt.Println("Loaded config from .specgate.yaml.")
+			fmt.Println("Loaded config from .specgate.yaml ✅")
 			fmt.Println()
 		} else {
 			fmt.Println("No SpecGate config found in project root. Created .specgate.yaml")
