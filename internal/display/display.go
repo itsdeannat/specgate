@@ -64,13 +64,13 @@ func printErrors(result *validate.CheckResult, strict bool) {
 
 	if len(result.SuccessResponseDescriptionViolations) > 0 {
 		for _, item := range result.SuccessResponseDescriptionViolations {
-			fmt.Fprintf(W, "%sMissing descriptions for success responses (2xx)\t%s\n", error, item)
+			fmt.Fprintf(W, "%sMissing success response descriptions\t%s\n", error, item)
 		}
 	}
 
 	if len(result.ErrorResponseDescriptionViolations) > 0 {
 		for _, item := range result.ErrorResponseDescriptionViolations {
-			fmt.Fprintf(W, "%sMissing descriptions for error responses (4xx/5xx/default)\t%s\n", error, item)
+			fmt.Fprintf(W, "%sMissing error response descriptions\t%s\n", error, item)
 		}
 	}
 
@@ -143,13 +143,13 @@ func PrintSummary(file string, result *validate.CheckResult, strict bool) {
 		fmt.Printf("%s - %d %s\n", file, totalCount, errorLabel)
 		fmt.Println()
 	} else {
-		errorLabel := "errors"
+		errorLabel := color.RedString("errors")
 		if ErrorCount == 1 {
-			errorLabel = "error"
+			errorLabel = color.RedString("error")
 		}
-		warningLabel := "warnings"
+		warningLabel := color.YellowString("warnings")
 		if WarningCount == 1 {
-			warningLabel = "warning"
+			warningLabel = color.YellowString("warning")
 		}
 		fmt.Printf("%s - %d %s, %d %s\n", file, ErrorCount, errorLabel, WarningCount, warningLabel)
 		fmt.Println()

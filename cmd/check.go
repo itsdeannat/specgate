@@ -12,7 +12,7 @@ import (
 	"github.com/itsdeannat/specgate/internal/report"
 	"github.com/itsdeannat/specgate/internal/settings"
 	"github.com/itsdeannat/specgate/internal/validate"
-
+	"charm.land/lipgloss/v2"
 	"github.com/getkin/kin-openapi/openapi3"
 	"github.com/spf13/cobra"
 	"gopkg.in/yaml.v3"
@@ -20,6 +20,7 @@ import (
 
 var strict bool
 var outputFormat string
+var verbose bool
 
 // checkCmd represents the check command
 var checkCmd = &cobra.Command{
@@ -42,14 +43,30 @@ status code, allowing it to be used as a quality gate in CI.`,
 		}
 
 		if err := doc.Validate(loader.Context); err != nil {
-			fmt.Fprintf(os.Stderr, "specgate: spec validation failed: %v\n", err)
-			os.Exit(2)
+			
+			issuesFile, _ := os.Create(".specgate.log")
+			if issuesFile != nil {
+				fmt.Fprintf(issuesFile, "OpenAPI Structural Issues\n")
+				fmt.Fprintf(issuesFile, "=========================\n\n")
+				fmt.Fprintf(issuesFile, "%v\n", err)
+				issuesFile.Close()
+			}
+
+			style := lipgloss.NewStyle().
+				Border(lipgloss.NormalBorder()).
+				BorderForeground(lipgloss.Color("226")).  
+				Padding(0, 1).
+				Margin(0, 0, 1, 0)
+			
+			if outputFormat != "json" && !verbose {
+				fmt.Println(style.Render("Warning: OpenAPI structural issues detected.\nSee .specgate.log for details."))
+			}
 		}
 
 		_, configErr := os.Stat("./.specgate.yaml") // check if config exists
 
 		if configErr == nil {
-			fmt.Println("Loaded config from .specgate.yaml")
+			fmt.Println("Loaded config from .specgate.yaml ✅")
 			fmt.Println()
 		} else {
 			fmt.Println("No SpecGate config found in project root. Created .specgate.yaml")
@@ -111,9 +128,13 @@ status code, allowing it to be used as a quality gate in CI.`,
 				os.Exit(2)
 			}
 			fmt.Println(string(jsonBytes))
-		} else {
+		}
+
+		if verbose {
 			display.PrintResults(file, result, strict)
 		}
+
+		display.PrintSummary(file, result, strict)
 
 		if result.HasErrors() || (strict && result.HasWarnings()) {
 			os.Exit(1)
@@ -126,6 +147,7 @@ func init() {
 	rootCmd.AddCommand(checkCmd)
 	checkCmd.Flags().BoolVar(&strict, "strict", false, "Treat warnings as errors")
 	checkCmd.Flags().StringVar(&outputFormat, "format", "", "Output results as json")
+	checkCmd.Flags().BoolVar(&verbose, "verbose", false, "Display details of specgate run")
 
 	// Here you will define your flags and configuration settings.
 
