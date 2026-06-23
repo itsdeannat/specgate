@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.1](https://github.com/itsdeannat/specgate/compare/v1.1.0...v1.1.1) (2026-06-23)
+
+
+### Fixed
+
+* add color when strict flag is used ([b91d27f](https://github.com/itsdeannat/specgate/commit/b91d27f802234d806db2b918fd510c62ae180428))
+* remove unneeded strict mode message ([cea63bf](https://github.com/itsdeannat/specgate/commit/cea63bfb82b7428e5da61b9dac06dc2dce38b00e))
+
 ## [1.1.0](https://github.com/itsdeannat/specgate/compare/v1.0.0...v1.1.0) (2026-05-24)
 
 
