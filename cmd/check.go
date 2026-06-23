@@ -110,10 +110,10 @@ status code, allowing it to be used as a quality gate in CI.`,
 			validate.CheckServer(server, result, config.ServerBlockList)
 		}
 
-		if strict && outputFormat == "" {
-			fmt.Println("STRICT MODE ENABLED")
-			fmt.Println()
-		}
+		// if strict && outputFormat == "" {
+		// 	fmt.Println("STRICT MODE ENABLED")
+		// 	fmt.Println()
+		// }
 
 		if outputFormat != "" && outputFormat != "json" {
 			fmt.Fprintf(os.Stderr, "specgate: unsupported format %q\n", outputFormat)
